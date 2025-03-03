@@ -1,6 +1,8 @@
 package e1;
 
 public class BronzeBankAccount implements BankAccount {
+    public static final int WITHDRAW_FEE = 1;
+    public static final int WITHDRAW_FEE_THRESHOLD = 100;
     private final BankAccount base;
 
     public BronzeBankAccount(BankAccount bankAccount) {
@@ -19,8 +21,8 @@ public class BronzeBankAccount implements BankAccount {
 
     @Override
     public void withdraw(int amount) {
-        if(amount < 100) base.withdraw(amount);
-        else base.withdraw(amount + 1);
+        if(amount < WITHDRAW_FEE_THRESHOLD) base.withdraw(amount);
+        else base.withdraw(amount + WITHDRAW_FEE);
 
     }
 }

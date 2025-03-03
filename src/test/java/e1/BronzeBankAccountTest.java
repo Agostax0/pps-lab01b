@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class BronzeBankAccountTest extends BaseBankAccountTest{
 
     public static final int WITHDRAWAL_FEE_THRESHOLD = 100;
+    public static final int WITHDRAW_FEE = 1;
 
     @BeforeEach
     void init(){
@@ -32,7 +33,7 @@ public class BronzeBankAccountTest extends BaseBankAccountTest{
 
         this.account.withdraw(moreThanWithdrawalFeeThreshold);
 
-        final int expectedBalance = INITIAL_BALANCE_AMOUNT + INITIAL_DEPOSIT_AMOUNT - moreThanWithdrawalFeeThreshold - 1;
+        final int expectedBalance = INITIAL_BALANCE_AMOUNT + INITIAL_DEPOSIT_AMOUNT - moreThanWithdrawalFeeThreshold - WITHDRAW_FEE;
 
         assertEquals(expectedBalance, this.account.getBalance());
     }
