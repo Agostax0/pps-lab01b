@@ -6,6 +6,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class GoldBankAccountTest  extends BaseBankAccountTest {
 
+    private static final int MAXIMUM_OVERDRAFT = 500;
+
     @BeforeEach
     void init(){
         this.account = new GoldBankAccount(new CoreBankAccount());
@@ -18,6 +20,13 @@ public class GoldBankAccountTest  extends BaseBankAccountTest {
         this.account.withdraw(withdrawAmount);
 
         final int expectedBalance = INITIAL_BALANCE_AMOUNT + INITIAL_DEPOSIT_AMOUNT - withdrawAmount;
+        assertEquals(expectedBalance, this.account.getBalance());
+    }
+
+    @Test
+    public void AllowsOverdraft(){
+        this.account.withdraw(MAXIMUM_OVERDRAFT);
+        final int expectedBalance = - MAXIMUM_OVERDRAFT;
         assertEquals(expectedBalance, this.account.getBalance());
     }
 }
