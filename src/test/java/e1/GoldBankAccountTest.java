@@ -14,7 +14,7 @@ public class GoldBankAccountTest  extends BaseBankAccountTest {
     }
 
     @Test
-    public void NoTransactionFee(){
+    public void noTransactionFee(){
         this.account.deposit(INITIAL_DEPOSIT_AMOUNT);
         final int withdrawAmount = 500;
         this.account.withdraw(withdrawAmount);
@@ -24,7 +24,7 @@ public class GoldBankAccountTest  extends BaseBankAccountTest {
     }
 
     @Test
-    public void AllowsOverdraft(){
+    public void allowsOverdraft(){
         this.account.withdraw(MAXIMUM_OVERDRAFT);
         final int expectedBalance = - MAXIMUM_OVERDRAFT;
         assertEquals(expectedBalance, this.account.getBalance());
