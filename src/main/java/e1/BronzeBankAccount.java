@@ -21,6 +21,8 @@ public class BronzeBankAccount implements BankAccount {
 
     @Override
     public void withdraw(int amount) {
+        if(amount > getBalance()) throw new IllegalStateException();
+
         if(amount < WITHDRAW_FEE_THRESHOLD) base.withdraw(amount);
         else base.withdraw(amount + WITHDRAW_FEE);
 

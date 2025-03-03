@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class BronzeBankAccountTest extends BaseBankAccountTest{
 
@@ -18,23 +19,26 @@ public class BronzeBankAccountTest extends BaseBankAccountTest{
     @Test
     public void dontApplyFeeIfUnderThreshold(){
         this.account.deposit(INITIAL_DEPOSIT_AMOUNT);
+        final int lessThanWithdrawThreshold = WITHDRAWAL_FEE_THRESHOLD - 1;
+        this.account.withdraw(lessThanWithdrawThreshold);
 
-        this.account.withdraw(WITHDRAWAL_FEE_THRESHOLD);
-
-        final int expectedBalance = INITIAL_BALANCE_AMOUNT + INITIAL_DEPOSIT_AMOUNT - WITHDRAWAL_FEE_THRESHOLD;
+        final int expectedBalance = INITIAL_BALANCE_AMOUNT + INITIAL_DEPOSIT_AMOUNT - lessThanWithdrawThreshold;
         assertEquals(expectedBalance, this.account.getBalance());
     }
 
     @Test
     public void applyFeeIfOverThreshold(){
         this.account.deposit(INITIAL_DEPOSIT_AMOUNT);
-
         final int moreThanWithdrawalFeeThreshold = WITHDRAWAL_FEE_THRESHOLD + 1;
-
         this.account.withdraw(moreThanWithdrawalFeeThreshold);
-
         final int expectedBalance = INITIAL_BALANCE_AMOUNT + INITIAL_DEPOSIT_AMOUNT - moreThanWithdrawalFeeThreshold - WITHDRAW_FEE;
-
         assertEquals(expectedBalance, this.account.getBalance());
+    }
+
+    @Test
+    public void noOverdraftAllowed(){
+        this.account.deposit(INITIAL_DEPOSIT_AMOUNT);
+        final int moreThanAccountBalance = this.account.getBalance() + 1;
+        assertThrows(IllegalStateException.class, () -> this.account.withdraw(moreThanAccountBalance));
     }
 }
