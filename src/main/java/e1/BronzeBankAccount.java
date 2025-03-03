@@ -19,6 +19,8 @@ public class BronzeBankAccount implements BankAccount {
 
     @Override
     public void withdraw(int amount) {
-        base.withdraw(amount);
+        if(amount < 100) base.withdraw(amount);
+        else base.withdraw(amount + 1);
+
     }
 }
