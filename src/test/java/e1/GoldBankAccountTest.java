@@ -3,6 +3,7 @@ package e1;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class GoldBankAccountTest  extends BaseBankAccountTest {
 
@@ -28,5 +29,12 @@ public class GoldBankAccountTest  extends BaseBankAccountTest {
         this.account.withdraw(MAXIMUM_OVERDRAFT);
         final int expectedBalance = - MAXIMUM_OVERDRAFT;
         assertEquals(expectedBalance, this.account.getBalance());
+    }
+
+    @Test
+    public void cannotExceedMaximumOverdraft(){
+        final int exceedingMaximumOverdraft = MAXIMUM_OVERDRAFT + 1;
+
+        assertThrows(IllegalStateException.class, () -> this.account.withdraw(exceedingMaximumOverdraft));
     }
 }
