@@ -29,9 +29,9 @@ public class BronzeBankAccountTest extends BaseBankAccountTest{
     @Test
     public void applyFeeIfOverThreshold(){
         this.account.deposit(INITIAL_DEPOSIT_AMOUNT);
-        final int moreThanWithdrawalFeeThreshold = WITHDRAWAL_FEE_THRESHOLD + 1;
-        this.account.withdraw(moreThanWithdrawalFeeThreshold);
-        final int expectedBalance = INITIAL_BALANCE_AMOUNT + INITIAL_DEPOSIT_AMOUNT - moreThanWithdrawalFeeThreshold - WITHDRAW_FEE;
+        final int withdrawalFeeThreshold = WITHDRAWAL_FEE_THRESHOLD + 1;
+        this.account.withdraw(withdrawalFeeThreshold);
+        final int expectedBalance = INITIAL_BALANCE_AMOUNT + INITIAL_DEPOSIT_AMOUNT - withdrawalFeeThreshold - WITHDRAW_FEE;
         assertEquals(expectedBalance, this.account.getBalance());
     }
 
