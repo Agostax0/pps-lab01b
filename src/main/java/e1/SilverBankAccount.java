@@ -1,6 +1,6 @@
 package e1;
 
-public class SilverBankAccount {
+public class SilverBankAccount implements BankAccount{
 
     private final BankAccount base;
 
@@ -8,14 +8,17 @@ public class SilverBankAccount {
         this.base = base;
     }
 
+    @Override
     public int getBalance() {
         return base.getBalance();
     }
 
+    @Override
     public void deposit(int amount) {
         base.deposit(amount);
     }
 
+    @Override
     public void withdraw(int amount) {
         if (this.getBalance() < amount){
             throw new IllegalStateException();
